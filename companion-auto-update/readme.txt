@@ -1,11 +1,15 @@
 === Companion Auto Update ===
 Contributors: Papin, qweb
-Donate link: https://www.paypal.me/wijzijnqreative/
+
 Tags: auto, automatic, background, update, updates, updating, automatic updates, automatic background updates, easy update, wordpress update, theme update, plugin update, up-to-date, security, update latest version, update core, update wp, update wp core, major updates, minor updates, update to new version, update core, update plugin, update plugins, update plugins automatically, update theme, plugin, theme, advance, control, mail, notifations, enable
+
 Requires at least: 5.3.0
-Tested up to: 6.8
+Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 3.9.3
+Stable tag: 3.9.4
+
+Donate link: https://www.paypal.me/wijzijnqreative/
+
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -81,6 +85,12 @@ So obviously, some of you wondered what the difference would be between the defa
 4. Keep track of updates with the update log
 
 == Changelog ==
+
+= 3.9.4 =
+📅 Release date: March 21, 2026
+
+* 🐞 Fixed: Fatal error on plugin activation
+
 
 = 3.9.3 (June 10, 2025) =
 * Improved security

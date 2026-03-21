@@ -4,7 +4,7 @@
  * Plugin Name: Companion Auto Update
  * Plugin URI: https://wijzijnqreative.nl/
  * Description: This plugin auto updates all plugins, all themes and the wordpress core.
- * Version: 3.9.3
+ * Version: 3.9.4
  * Author: Papin Schipper
  * Author URI: https://wijzijnqreative.nl/
  * Contributors: papin
@@ -61,21 +61,21 @@ function cau_keep_log_uptodate() {
 add_action( 'cau_log_updater', 'cau_keep_log_uptodate' );
 
 // Redirect to welcome screen on activation of plugin
-function cau_pluginActivateWelcome() {
-    add_option( 'cau_redirectToWelcomeScreen', true );
-}
-register_activation_hook(__FILE__, 'cau_pluginActivateWelcome');
+// function cau_pluginActivateWelcome() {
+//     add_option( 'cau_redirectToWelcomeScreen', true );
+// }
+// register_activation_hook(__FILE__, 'cau_pluginActivateWelcome');
 
-// Redirect to welcome screen on activation of plugin
-function cau_pluginRedirectWelcomeScreen() {
-    if ( get_option( 'cau_redirectToWelcomeScreen', false ) ) {
-        delete_option( 'cau_redirectToWelcomeScreen' );
-        if( !isset( $_GET['activate-multi'] ) ) {
-            wp_redirect( admin_url( cau_menloc().'?page=cau-settings&welcome=1' ) );
-        }
-    }
-}
-add_action( 'admin_init', 'cau_pluginRedirectWelcomeScreen' );
+// // Redirect to welcome screen on activation of plugin
+// function cau_pluginRedirectWelcomeScreen() {
+//     if ( get_option( 'cau_redirectToWelcomeScreen', false ) ) {
+//         delete_option( 'cau_redirectToWelcomeScreen' );
+//         if( !isset( $_GET['activate-multi'] ) ) {
+//             wp_redirect( admin_url( cau_menloc().'?page=cau-settings&welcome=1' ) );
+//         }
+//     }
+// }
+// add_action( 'admin_init', 'cau_pluginRedirectWelcomeScreen' );
 
 // Donate url
 function cau_donateUrl() {
@@ -93,8 +93,8 @@ function cau_database_creation() {
 
 	// Plugin db info
 	$cau_db_version 	= cau_db_version();
-	$autoupdates 		= $wpdb->prefix."auto_updates"; 
-	$updateLog 			= $wpdb->prefix."update_log"; 
+	$autoupdates 		= $wpdb->prefix."auto_updates";
+	$updateLog 			= $wpdb->prefix."update_log";
 
 	// WordPress db info
 	$charset_collate 	= $wpdb->get_charset_collate();
@@ -120,7 +120,7 @@ function cau_check_if_exists( $whattocheck, $id = 'name', $db_table = 'auto_upda
 
 	global $wpdb;
 
-	$table_name = $wpdb->prefix.$db_table; 
+	$table_name = $wpdb->prefix.$db_table;
 	$rows 		= $wpdb->get_col( "SELECT COUNT(*) as num_rows FROM {$table_name} WHERE {$id} = '{$whattocheck}'" );
 	$check 		= $rows[0];
 
@@ -133,14 +133,14 @@ function cau_install_data() {
 
 	global $wpdb;
 
-	$table_name = $wpdb->prefix . "auto_updates"; 
+	$table_name = $wpdb->prefix . "auto_updates";
 	$toemail 	= get_option('admin_email');
 
 	// Update configs
 	if( !cau_check_if_exists( 'plugins' ) ) $wpdb->insert( $table_name, array( 'name' => 'plugins', 'onoroff' => 'on' ) );
 	if( !cau_check_if_exists( 'themes' ) ) 	$wpdb->insert( $table_name, array( 'name' => 'themes', 'onoroff' => 'on' ) );
 	if( !cau_check_if_exists( 'minor' ) ) 	$wpdb->insert( $table_name, array( 'name' => 'minor', 'onoroff' => 'on' ) );
-	if( !cau_check_if_exists( 'major' ) ) 	$wpdb->insert( $table_name, array( 'name' => 'major', 'onoroff' => '' ) ); 
+	if( !cau_check_if_exists( 'major' ) ) 	$wpdb->insert( $table_name, array( 'name' => 'major', 'onoroff' => '' ) );
 
 	// Email configs
 	if( !cau_check_if_exists( 'email' ) ) 			$wpdb->insert( $table_name, array( 'name' => 'email', 'onoroff' => '' ) );
@@ -177,8 +177,8 @@ function cau_remove() {
 
 	// Delete tables
 	global $wpdb;
-	$autoupdates 	= $wpdb->prefix."auto_updates"; 
-	$updateLog 		= $wpdb->prefix."update_log"; 
+	$autoupdates 	= $wpdb->prefix."auto_updates";
+	$updateLog 		= $wpdb->prefix."update_log";
 	$wpdb->query( "DROP TABLE IF EXISTS $autoupdates" );
 	$wpdb->query( "DROP TABLE IF EXISTS $updateLog" );
 
@@ -210,8 +210,8 @@ function cau_update_db_check() {
         if( get_site_option( 'cau_db_version' ) < '3.7.2' ) {
 
         	global $wpdb;
-			$autoupdates 	= $wpdb->prefix."auto_updates"; 
-			$updateLog 		= $wpdb->prefix."update_log"; 
+			$autoupdates 	= $wpdb->prefix."auto_updates";
+			$updateLog 		= $wpdb->prefix."update_log";
         	$db_charset 	= constant( 'DB_CHARSET' );
         	$wpdb->query( "ALTER TABLE $autoupdates CONVERT TO CHARACTER SET $db_charset" );
         	$wpdb->query( "ALTER TABLE $updateLog CONVERT TO CHARACTER SET $db_charset" );
@@ -249,11 +249,11 @@ function cau_frontend() {
 		date_default_timezone_set( cau_get_proper_timezone() );
 
 		// Allow only access to these pages
-		$allowedPages 	= array( 
-			'dashboard' 	=> esc_html__( 'Dashboard', 'companion-auto-update' ), 
-			'pluginlist' 	=> esc_html__( 'Update filter', 'companion-auto-update' ), 
-			'log' 			=> esc_html__( 'Update log', 'companion-auto-update' ), 
-			'status' 		=> esc_html__( 'Status', 'companion-auto-update' ), 
+		$allowedPages 	= array(
+			'dashboard' 	=> esc_html__( 'Dashboard', 'companion-auto-update' ),
+			'pluginlist' 	=> esc_html__( 'Update filter', 'companion-auto-update' ),
+			'log' 			=> esc_html__( 'Update log', 'companion-auto-update' ),
+			'status' 		=> esc_html__( 'Status', 'companion-auto-update' ),
 		);
 
 		// Show subtabs
@@ -278,7 +278,7 @@ function cau_frontend() {
 		if( array_key_exists( $requestedPage, $allowedPages ) ) {
 			require_once( plugin_dir_path( __FILE__ ) . 'admin/'.$requestedPage.'.php' );
 		} else {
-			wp_die( 'You\'re not allowed to view <strong>'.$requestedPage.'</strong>.' );				
+			wp_die( 'You\'re not allowed to view <strong>'.$requestedPage.'</strong>.' );
 		}
 
 	echo '</div>';
@@ -287,7 +287,7 @@ function cau_frontend() {
 
 // Add a widget to the dashboard.
 function cau_add_widget() {
-	if ( cau_allowed_user_rights() ) wp_add_dashboard_widget( 'cau-update-log', esc_html__('Update log', 'companion-auto-update'), 'cau_widget' );	
+	if ( cau_allowed_user_rights() ) wp_add_dashboard_widget( 'cau-update-log', esc_html__('Update log', 'companion-auto-update'), 'cau_widget' );
 }
 add_action( 'wp_dashboard_setup', 'cau_add_widget' );
 
@@ -314,8 +314,8 @@ function load_cau_page_styles( $hook ) {
 
     // WordPress scripts we need
 	wp_enqueue_style( 'thickbox' );
-	wp_enqueue_script( 'thickbox' );   
-	wp_enqueue_script( 'plugin-install' );   
+	wp_enqueue_script( 'thickbox' );
+	wp_enqueue_script( 'plugin-install' );
 }
 add_action( 'admin_enqueue_scripts', 'load_cau_page_styles', 100 );
 
@@ -323,20 +323,20 @@ add_action( 'admin_enqueue_scripts', 'load_cau_page_styles', 100 );
 require_once( plugin_dir_path( __FILE__ ) . 'cau_emails.php' );
 
 // Add settings link on plugin page
-function cau_settings_link( $links ) { 
+function cau_settings_link( $links ) {
 
-	$settings_link 	= '<a href="'.cau_url( 'dashboard' ).'">'.esc_html__( 'Settings', 'companion-auto-update' ).'</a>'; 
-	$settings_link2 = '<a href="https://translate.wordpress.org/projects/wp-plugins/companion-auto-update">'.esc_html__( 'Help us translate', 'companion-auto-update' ).'</a>'; 
-	$settings_link3 = '<a href="'.cau_donateUrl().'">'.esc_html__( 'Donate to help development', 'companion-auto-update' ).'</a>'; 
+	$settings_link 	= '<a href="'.cau_url( 'dashboard' ).'">'.esc_html__( 'Settings', 'companion-auto-update' ).'</a>';
+	$settings_link2 = '<a href="https://translate.wordpress.org/projects/wp-plugins/companion-auto-update">'.esc_html__( 'Help us translate', 'companion-auto-update' ).'</a>';
+	$settings_link3 = '<a href="'.cau_donateUrl().'">'.esc_html__( 'Donate to help development', 'companion-auto-update' ).'</a>';
 
-	array_unshift( $links, $settings_link2 ); 
-	array_unshift( $links, $settings_link3 ); 
-	if( cau_allowed_user_rights() )	array_unshift( $links, $settings_link ); 
+	array_unshift( $links, $settings_link2 );
+	array_unshift( $links, $settings_link3 );
+	if( cau_allowed_user_rights() )	array_unshift( $links, $settings_link );
 
-	return $links; 
+	return $links;
 
 }
-$plugin = plugin_basename(__FILE__); 
+$plugin = plugin_basename(__FILE__);
 add_filter( "plugin_action_links_$plugin", "cau_settings_link" );
 
 // Auto Update Class
@@ -350,7 +350,7 @@ class CAU_auto_update {
     public function CAU_auto_update_filters() {
 
 		global $wpdb;
-		$table_name = $wpdb->prefix . "auto_updates"; 
+		$table_name = $wpdb->prefix . "auto_updates";
 
 		// Disable WP emails
 		add_filter( 'auto_plugin_update_send_email', '__return_false' ); // Plugin updates
@@ -409,7 +409,7 @@ function cau_checkForIssues( $admin_bar ) {
 		$admin_bar->add_menu( array(
 	        'id'    => 'cau-has-issues',
 	        'title' => '<span class="ab-icon"></span><span class="cau-level-'.cau_pluginIssueLevels().'">'.cau_pluginIssueCount().'</span>',
-	        'href'  => cau_url( 'status' ),       
+	        'href'  => cau_url( 'status' ),
 	        'meta'   => array(
 	            'target'   => '_self',
 	            'title'    => esc_html__( 'Companion Auto Update ran into a critical error. View the status log for more info.', 'companion-auto-update' ),
