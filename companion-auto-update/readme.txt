@@ -1,7 +1,7 @@
 === Companion Auto Update ===
 Contributors: Papin, qweb
 
-Tags: auto, automatic, background, update, updates, updating, automatic updates, automatic background updates, easy update, wordpress update, theme update, plugin update, up-to-date, security, update latest version, update core, update wp, update wp core, major updates, minor updates, update to new version, update core, update plugin, update plugins, update plugins automatically, update theme, plugin, theme, advance, control, mail, notifations, enable
+Tags: auto, update, security, control, safety
 
 Requires at least: 5.3.0
 Tested up to: 6.9
